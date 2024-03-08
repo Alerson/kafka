@@ -23,7 +23,7 @@ public class MyKafkaConsumer {
                          Acknowledgment ack) {
         PessoaDTO pessoaDto = pessoaConverter.toDto(pessoa);
         ValidationUtils.validate(pessoaDto);
-        System.out.println("Received message: " + pessoaDto);
+        System.out.println("Kafka message listener: " + pessoaDto);
         ack.acknowledge();
     }
 
