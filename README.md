@@ -32,7 +32,7 @@ Application Execution: With the Kafka broker up and running, you're now set to l
 - NOTE: The commands can be found in the "init-localstack.sh" file.
 ![img.png](img.png)
 
-The message is being sent by the application's main class. A Bean was created using the CommandLineRunner interface, into which an instance of the Producer is injected to send the message.
+The **Kafka message** is being sent by the application's main class. A Bean was created using the CommandLineRunner interface, into which an instance of the Producer is injected to send the message.
 ![img_2.png](img_2.png)
 
 **Console log**
