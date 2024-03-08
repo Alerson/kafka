@@ -1,3 +1,5 @@
+**SPRING BOOT 3.2.3**
+
 This project serves as a comprehensive guide on configuring a virtualized environment using Docker, specifically tailored for running applications leveraging pivotal technologies such as Kafka and AWS SQS (Amazon Simple Queue Service).
 The initiative meticulously outlines the integration and functionality of key components, including Kafka Producers, Consumers, and ErrorHandlers, alongside the robust AWS SQS, to facilitate seamless message queuing and processing.
 ***Key Features***
