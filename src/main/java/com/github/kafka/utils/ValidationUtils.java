@@ -1,6 +1,5 @@
 package com.github.kafka.utils;
 
-import com.github.kafka.dto.PessoaDTO;
 import com.github.kafka.exception.ValidationException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
