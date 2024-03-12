@@ -7,12 +7,12 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyKafkaProducer {
+public class MyKafkaProducerPessoa {
 
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    @Value("${spring.kafka.consumer.topic}")
+    @Value("${spring.kafka.consumer.topic.pessoa}")
     private String topic;
 
     public void sendMessage(Pessoa pessoa) {

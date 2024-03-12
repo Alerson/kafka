@@ -1,0 +1,21 @@
+{
+  "namespace":"example.avro",
+  "type":"record",
+  "name":"Produto",
+  "fields":[
+    {
+      "name":"name",
+      "type":[
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name":"valor",
+      "type":[
+        "double",
+        "null"
+      ]
+    }
+  ]
+}
