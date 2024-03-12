@@ -2,9 +2,7 @@ package com.github.kafka.sqs;
 
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import io.awspring.cloud.sqs.annotation.SqsListenerAcknowledgementMode;
-import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Service
 public class SQSMessageListener {

@@ -1,12 +1,9 @@
 package com.github.kafka.consumer;
 
 import com.github.kafka.converter.PessoaConverter;
-import com.github.kafka.converter.ProdutoConverter;
 import com.github.kafka.dto.PessoaDTO;
-import com.github.kafka.dto.ProdutoDTO;
 import com.github.kafka.utils.ValidationUtils;
 import example.avro.Pessoa;
-import example.avro.Produto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
