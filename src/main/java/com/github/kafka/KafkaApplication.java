@@ -1,7 +1,7 @@
 package com.github.kafka;
 
-import com.github.kafka.producer.MyKafkaProducerPessoa;
-import com.github.kafka.producer.MyKafkaProducerProduto;
+import com.github.kafka.producer.ProducerPessoa;
+import com.github.kafka.producer.ProducerProduto;
 import example.avro.Pessoa;
 import example.avro.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class KafkaApplication {
     @Autowired
-    private MyKafkaProducerPessoa producerPessoa;
+    private ProducerPessoa producerPessoa;
     @Autowired
-    private MyKafkaProducerProduto producerProduto;
+    private ProducerProduto producerProduto;
 
     public static void main(String[] args) {
         SpringApplication.run(KafkaApplication.class, args);
