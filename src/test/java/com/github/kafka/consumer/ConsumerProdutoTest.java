@@ -34,7 +34,7 @@ class ConsumerProdutoTest {
     @Test
     public void testConsumerProduto(){
         consumerProduto.consumer(produto, ack);
-        Assertions.assertNotNull(produtoDTO, "ProdutoDTO should not be null after being processed");
+        Assertions.assertNotNull(produtoDTO, "produtoDTO should not be null after being processed");
     }
 
 }
