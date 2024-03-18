@@ -25,11 +25,9 @@ public class ConsumerPessoaTest {
         pessoaConverter = Mockito.mock(PessoaConverter.class);
         consumerPessoa = new ConsumerPessoa(pessoaConverter);
 
-        // Setup test data
         pessoaDTO = PessoaDTO.builder().surname("Rigo").name("Alerson").build();
         pessoa = Pessoa.newBuilder().setName("Alerson").setSurname("Rigo").build();
 
-        // Prepare mock behavior
         Mockito.when(pessoaConverter.toDto(Mockito.any())).thenReturn(pessoaDTO);
     }
 
