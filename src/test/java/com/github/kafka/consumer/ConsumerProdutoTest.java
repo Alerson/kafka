@@ -5,27 +5,28 @@ import com.github.kafka.dto.ProdutoDTO;
 import example.avro.Produto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.kafka.support.Acknowledgment;
 
 class ConsumerProdutoTest {
+    @InjectMocks
+    private ConsumerProduto consumerProduto;
+    @Mock
+    private Acknowledgment ack;
+    @Mock
+    private ProdutoConverter produtoConverter;
 
-    private static ConsumerProduto consumerProduto;
+    private ProdutoDTO produtoDTO;
 
-    private static Acknowledgment ack;
-
-    private static ProdutoConverter produtoConverter;
-
-    private static ProdutoDTO produtoDTO;
-
-    private static Produto produto;
-    @BeforeAll
-    public static void setUp(){
-        ack = Mockito.mock(Acknowledgment.class);
-        produtoConverter = Mockito.mock(ProdutoConverter.class);
-        consumerProduto = Mockito.mock(ConsumerProduto.class);
-
+    private Produto produto;
+    @BeforeEach
+    public void setUp(){
+        MockitoAnnotations.openMocks(this);
         produtoDTO = ProdutoDTO.builder().name("JBL").valor("2.700").build();
         produto = Produto.newBuilder().setName("JBL").setValor(2.700).build();
 

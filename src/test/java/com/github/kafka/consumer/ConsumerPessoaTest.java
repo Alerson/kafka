@@ -5,26 +5,31 @@ import com.github.kafka.dto.PessoaDTO;
 import example.avro.Pessoa;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.kafka.support.Acknowledgment;
 
 public class ConsumerPessoaTest {
 
-    private static ConsumerPessoa consumerPessoa;
+    @InjectMocks
+    private ConsumerPessoa consumerPessoa;
 
-    private static Acknowledgment ack;
-    private static PessoaConverter pessoaConverter;
+    @Mock
+    private Acknowledgment ack;
+    @Mock
+    private PessoaConverter pessoaConverter;
+    @Mock
+    private PessoaDTO pessoaDTO;
+    @Mock
+    private Pessoa pessoa;
 
-    private static PessoaDTO pessoaDTO;
-    private static Pessoa pessoa;
-
-    @BeforeAll
-    public static void setUp() {
-        ack = Mockito.mock(Acknowledgment.class);
-        pessoaConverter = Mockito.mock(PessoaConverter.class);
-        consumerPessoa = new ConsumerPessoa(pessoaConverter);
-
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
         pessoaDTO = PessoaDTO.builder().surname("Rigo").name("Alerson").build();
         pessoa = Pessoa.newBuilder().setName("Alerson").setSurname("Rigo").build();
 
