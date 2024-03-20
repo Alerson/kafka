@@ -32,13 +32,13 @@ public class CustomKafkaErrorHandlerTest {
     }
 
     @Test
-    void handleErrorWithoutConsumerReturnsNull() {
+    public void handleErrorWithoutConsumerReturnsNull() {
         Object result = errorHandler.handleError(mockMessage, mockException);
         Assertions.assertNull(result);
     }
 
     @Test
-    void handleErrorWithConsumerAcknowledgesMessage() {
+    public void handleErrorWithConsumerAcknowledgesMessage() {
         when(mockMessage.getPayload()).thenReturn("Test message");
         when(mockException.getCause()).thenReturn(new RuntimeException("Test exception"));
 
