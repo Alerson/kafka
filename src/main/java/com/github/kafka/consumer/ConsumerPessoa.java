@@ -23,7 +23,7 @@ public class ConsumerPessoa {
     @KafkaHandler
     public void consumer(@Payload Pessoa pessoa,
                          Acknowledgment ack) {
-        PessoaDTO pessoaDto = pessoaConverter.toDto(pessoa);
+        var pessoaDto = pessoaConverter.toDto(pessoa);
         ValidationUtils.validate(pessoaDto);
         System.out.println("Kafka message listener: " + pessoaDto);
         ack.acknowledge();
