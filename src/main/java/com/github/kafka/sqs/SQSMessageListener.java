@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class SQSMessageListener {
 
     @SqsListener(value = "${app.sqs.queue-name}", acknowledgementMode = SqsListenerAcknowledgementMode.ALWAYS)
-    public void listen(String message) throws Exception {
+    public void listen(String message) {
         try {
             System.out.println("SQS Message listener: " + message);
         } catch (Exception e) {
