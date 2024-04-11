@@ -9,7 +9,11 @@ public class SQSMessageListener {
 
     @SqsListener(value = "${app.sqs.queue-name}", acknowledgementMode = SqsListenerAcknowledgementMode.ALWAYS)
     public void listen(String message) throws Exception {
-        System.out.println("SQS Message listener: " + message);
+        try {
+            System.out.println("SQS Message listener: " + message);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
