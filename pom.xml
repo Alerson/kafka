@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.3</version>
+		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github</groupId>
@@ -15,8 +15,8 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<start-class>com.baeldung.spring.cloud.aws.sqs.SpringCloudAwsApplication</start-class>
-		<spring-cloud-aws.version>3.1.0</spring-cloud-aws.version>
-		<maven.surefire.version>3.1.0</maven.surefire.version>
+		<spring-cloud-aws.version>3.4.0</spring-cloud-aws.version>
+		<maven.surefire.version>3.5.4</maven.surefire.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<java.version>17</java.version>
@@ -73,12 +73,12 @@
 		<dependency>
 			<groupId>io.confluent</groupId>
 			<artifactId>kafka-avro-serializer</artifactId>
-			<version>7.2.1</version> <!-- Make sure to use the latest version available -->
+			<version>8.1.0</version> <!-- Make sure to use the latest version available -->
 		</dependency>
 		<dependency>
 			<groupId>org.apache.avro</groupId>
 			<artifactId>avro</artifactId>
-			<version>1.11.3</version>
+			<version>1.12.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -88,14 +88,14 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>7.0.1.Final</version>
+			<version>9.1.0.Final</version>
 		</dependency>
 
 		<!-- Dependency for EL (Expression Language), required by Hibernate Validator -->
 		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>jakarta.el</artifactId>
-			<version>3.0.3</version>
+			<groupId>org.glassfish.expressly</groupId>
+			<artifactId>expressly</artifactId>
+			<version>6.0.0</version>
 		</dependency>
 
 		<dependency>
@@ -113,7 +113,7 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>5.11.0</version>
+			<version>5.15.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -137,7 +137,7 @@
 			<plugin>
 				<groupId>org.apache.avro</groupId>
 				<artifactId>avro-maven-plugin</artifactId>
-				<version>1.11.3</version> <!-- Use the latest version -->
+				<version>1.12.1</version> <!-- Use the latest version -->
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -154,7 +154,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.8</version> <!-- Use the latest version -->
+				<version>0.8.14</version> <!-- Use the latest version -->
 				<executions>
 					<execution>
 						<goals>
