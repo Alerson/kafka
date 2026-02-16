@@ -1,7 +1,6 @@
 package com.github.kafka.producer;
 
 import example.avro.Produto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -9,14 +8,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProducerProduto {
 
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final String topic;
 
-    @Autowired
-    private KafkaTemplate<String, Object> kafkaTemplate;
+    public ProducerProduto(KafkaTemplate<String, Object> kafkaTemplate,
+                           @Value("${spring.kafka.consumer.topic.produto}") String topic) {
+        this.kafkaTemplate = kafkaTemplate;
+        this.topic = topic;
+    }
 
-    @Value("${spring.kafka.consumer.topic.produto}")
-    private String topic;
-
-    public void sendMessage(Produto pessoa) {
-        kafkaTemplate.send(topic, pessoa);
+    public void sendMessage(Produto produto) {
+        kafkaTemplate.send(topic, produto);
     }
 }

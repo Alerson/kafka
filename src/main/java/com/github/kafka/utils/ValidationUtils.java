@@ -11,11 +11,14 @@ import java.util.stream.Collectors;
 
 public class ValidationUtils {
 
-    public static <T> void validate(T object) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
+    private static final ValidatorFactory FACTORY = Validation.buildDefaultValidatorFactory();
+    private static final Validator VALIDATOR = FACTORY.getValidator();
 
-        Set<ConstraintViolation<T>> violations = validator.validate(object);
+    private ValidationUtils() {
+    }
+
+    public static <T> void validate(T object) {
+        Set<ConstraintViolation<T>> violations = VALIDATOR.validate(object);
         if (!violations.isEmpty()) {
             String errorMessage = violations.stream()
                     .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
