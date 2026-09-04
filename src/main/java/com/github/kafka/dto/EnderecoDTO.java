@@ -1,8 +1,7 @@
 package com.github.kafka.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.Objects;
 
@@ -11,8 +10,9 @@ public class EnderecoDTO {
     @NotBlank(message = "can not be empty or null")
     private String logradouro;
 
-    @NotNull(message = "can not be null")
-    @Positive(message = "must be a positive number")
+    // numero é opcional (endereços sem numeração/"S/N" são comuns) e aceita zero;
+    // apenas valores negativos são inválidos. Ver docs/features/2026-09-fluxo-endereco.md.
+    @PositiveOrZero(message = "must not be negative")
     private Integer numero;
 
     @NotBlank(message = "can not be empty or null")

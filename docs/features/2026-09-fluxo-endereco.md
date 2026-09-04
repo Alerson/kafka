@@ -56,8 +56,6 @@ seguindo exatamente o mesmo padrão de producer/consumer/converter/validação j
 ## Fora de escopo
 - Persistência em banco de dados — apenas o fluxo de mensageria (Kafka), igual a `Pessoa`/`Produto`.
 - Qualquer alteração no fluxo SQS (`SQSMessageListener`) — é independente do fluxo Kafka.
-- Extrair o esqueleto comum de `ConsumerPessoa`/`ConsumerProduto`/`ConsumerEndereco` para um
-  **Template Method** — anotado como nota técnica abaixo, não faz parte desta feature.
 - `docker-compose.yml` — nenhuma alteração esperada, reaproveita o broker Kafka já existente.
 
 ## Padrões de design a considerar
@@ -65,18 +63,22 @@ Referência: `.claude/skills/design-patterns/SKILL.md`.
 
 - **Adapter** — em `EnderecoConverter`, convertendo o objeto Avro gerado para `EnderecoDTO`,
   igual a `PessoaConverter`/`ProdutoConverter`.
-- **Template Method** (não aplicado agora) — com três consumers seguindo o mesmo esqueleto
-  exato (`converter.toDto` → `ValidationUtils.validate` → log → `ack.acknowledge()`), este é o
-  ponto em que o padrão deixaria de ser "candidato" e passaria a valer a pena como refactor
-  transversal. Ver seção "Notas técnicas".
+- **Template Method** — **aplicado** em `consumer/AbstractKafkaConsumer<T, D>`: o `/code-review`
+  na branch confirmou a duplicação exata do esqueleto nos 3 consumers (regra dos três), então o
+  refactor foi extraído (ver "Notas técnicas").
 
 ## Notas técnicas / decisões
-- Optou-se por **não** aplicar Template Method nesta feature para manter o escopo pequeno e o
-  teste do fluxo de desenvolvimento simples. Se uma quarta entidade for adicionada no futuro
-  seguindo o mesmo padrão, esse refactor deve ser revisitado (regra do "rule of three" citada na
-  skill de design patterns).
-- Validação de `numero` (Integer) resolvida na implementação: `@NotNull` + `@Positive` (número
-  do endereço deve existir e ser maior que zero) — decisão sem impacto no restante do design.
+- **[Pós-review] Template Method extraído.** O `/code-review` apontou que `ConsumerPessoa`,
+  `ConsumerProduto` e `ConsumerEndereco` duplicavam exatamente o mesmo esqueleto
+  (`toDto` → `ValidationUtils.validate` → log → `ack.acknowledge()`), cruzando a regra dos três.
+  Foi criada `consumer/AbstractKafkaConsumer<T, D>` com o método template `processMessage`; cada
+  consumer concreto agora só implementa `toDto(T)`. Comportamento observável não mudou (mesmos
+  testes de consumer passam sem alteração).
+- **[Pós-review] Validação de `numero` corrigida.** A validação original (`@NotNull` +
+  `@Positive`) descartava silenciosamente endereços sem numeração ("S/N", comuns no Brasil) ou
+  com número `0`, via `CustomKafkaErrorHandler` (sem retry/DLQ). Ajustado para `@PositiveOrZero`
+  sem `@NotNull`: `numero` agora é opcional (`null` = sem numeração) e aceita `0`; apenas valores
+  negativos são rejeitados. Cobrido por novos casos em `ValidationUtilsTest`.
 
 ## Referências
 - Processo de geração deste arquivo: `docs/workflow-features-com-claude.md`

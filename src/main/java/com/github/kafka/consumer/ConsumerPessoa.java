@@ -1,10 +1,8 @@
 package com.github.kafka.consumer;
 
 import com.github.kafka.converter.PessoaConverter;
-import com.github.kafka.utils.ValidationUtils;
+import com.github.kafka.dto.PessoaDTO;
 import example.avro.Pessoa;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -15,9 +13,7 @@ import org.springframework.stereotype.Service;
 @KafkaListener(topics = "${spring.kafka.consumer.topic.pessoa}",
         groupId = "${spring.kafka.consumer.group-id}",
         errorHandler = "customKafkaErrorHandler")
-public class ConsumerPessoa {
-
-    private static final Logger log = LoggerFactory.getLogger(ConsumerPessoa.class);
+public class ConsumerPessoa extends AbstractKafkaConsumer<Pessoa, PessoaDTO> {
 
     private final PessoaConverter pessoaConverter;
 
@@ -28,10 +24,12 @@ public class ConsumerPessoa {
     @KafkaHandler
     public void consumer(@Payload Pessoa pessoa,
                          Acknowledgment ack) {
-        var pessoaDto = pessoaConverter.toDto(pessoa);
-        ValidationUtils.validate(pessoaDto);
-        log.info("Kafka message listener: {}", pessoaDto);
-        ack.acknowledge();
+        processMessage(pessoa, ack);
+    }
+
+    @Override
+    protected PessoaDTO toDto(Pessoa pessoa) {
+        return pessoaConverter.toDto(pessoa);
     }
 
 }

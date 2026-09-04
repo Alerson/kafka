@@ -1,10 +1,8 @@
 package com.github.kafka.consumer;
 
 import com.github.kafka.converter.EnderecoConverter;
-import com.github.kafka.utils.ValidationUtils;
+import com.github.kafka.dto.EnderecoDTO;
 import example.avro.Endereco;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -15,9 +13,7 @@ import org.springframework.stereotype.Service;
 @KafkaListener(topics = "${spring.kafka.consumer.topic.endereco}",
         groupId = "${spring.kafka.consumer.group-id}",
         errorHandler = "customKafkaErrorHandler")
-public class ConsumerEndereco {
-
-    private static final Logger log = LoggerFactory.getLogger(ConsumerEndereco.class);
+public class ConsumerEndereco extends AbstractKafkaConsumer<Endereco, EnderecoDTO> {
 
     private final EnderecoConverter enderecoConverter;
 
@@ -28,10 +24,12 @@ public class ConsumerEndereco {
     @KafkaHandler
     public void consumer(@Payload Endereco endereco,
                          Acknowledgment ack) {
-        var enderecoDTO = enderecoConverter.toDto(endereco);
-        ValidationUtils.validate(enderecoDTO);
-        log.info("Kafka message listener: {}", enderecoDTO);
-        ack.acknowledge();
+        processMessage(endereco, ack);
+    }
+
+    @Override
+    protected EnderecoDTO toDto(Endereco endereco) {
+        return enderecoConverter.toDto(endereco);
     }
 
 }
