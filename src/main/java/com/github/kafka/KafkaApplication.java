@@ -1,7 +1,9 @@
 package com.github.kafka;
 
+import com.github.kafka.producer.ProducerEndereco;
 import com.github.kafka.producer.ProducerPessoa;
 import com.github.kafka.producer.ProducerProduto;
+import example.avro.Endereco;
 import example.avro.Pessoa;
 import example.avro.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ public class KafkaApplication {
     private ProducerPessoa producerPessoa;
     @Autowired
     private ProducerProduto producerProduto;
+    @Autowired
+    private ProducerEndereco producerEndereco;
 
     public static void main(String[] args) {
         SpringApplication.run(KafkaApplication.class, args);
@@ -32,6 +36,14 @@ public class KafkaApplication {
             producerProduto.sendMessage(Produto.newBuilder()
                     .setName("JBL")
                     .setValor(2.700)
+                    .build());
+
+            producerEndereco.sendMessage(Endereco.newBuilder()
+                    .setLogradouro("Rua das Flores")
+                    .setNumero(123)
+                    .setCidade("Porto Alegre")
+                    .setEstado("RS")
+                    .setCep("90000-000")
                     .build());
         };
     }
