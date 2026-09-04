@@ -145,7 +145,7 @@ Tratam de comunicação e atribuição de responsabilidades entre objetos.
 
 ### Template Method
 - **Intenção:** definir o esqueleto de um algoritmo na superclasse, deixando subclasses sobrescreverem passos específicos.
-- **Quando usar:** quando múltiplos consumers/producers (ex.: `ConsumerPessoa` e `ConsumerProduto`) seguem exatamente o mesmo fluxo (receber → converter → validar → ack/erro) variando apenas o tipo de dado — extrair esse esqueleto evita duplicação entre as classes.
+- **Quando usar:** quando múltiplos consumers/producers seguem exatamente o mesmo fluxo (receber → converter → validar → ack/erro) variando apenas o tipo de dado — extrair esse esqueleto evita duplicação entre as classes. **Aplicado neste projeto**: `consumer/AbstractKafkaConsumer<T, D>` define o esqueleto (`toDto` → `ValidationUtils.validate` → log → `ack.acknowledge()`); `ConsumerPessoa`, `ConsumerProduto` e `ConsumerEndereco` sobrescrevem apenas o passo `toDto(T)`. Extraído quando a 3ª duplicação confirmou a "regra dos três".
 - **Contras:** pode violar Liskov se subclasses "pularem" passos do template; muitos passos tornam a manutenção mais difícil.
 
 ### Visitor
@@ -158,10 +158,10 @@ Tratam de comunicação e atribuição de responsabilidades entre objetos.
 
 | Camada / classe existente | Padrão já aplicado (ou recomendado) |
 |---|---|
-| `converter/PessoaConverter`, `converter/ProdutoConverter` | **Adapter** (Avro → DTO) |
+| `converter/PessoaConverter`, `converter/ProdutoConverter`, `converter/EnderecoConverter` | **Adapter** (Avro → DTO) |
 | `exception/errorhandler/CustomKafkaErrorHandler` | **Chain of Responsibility** (ponto único de tratamento; pode evoluir para cadeia de handlers por tipo de erro) |
 | `utils/ValidationUtils`, `utils/ConversionUtils` | Candidatos a **Strategy** se surgirem múltiplas variações de validação/conversão por tipo |
-| `consumer/ConsumerPessoa`, `consumer/ConsumerProduto` | Fluxo repetido → candidato a **Template Method** se um terceiro consumer for adicionado |
+| `consumer/AbstractKafkaConsumer<T, D>` + `ConsumerPessoa`/`ConsumerProduto`/`ConsumerEndereco` | **Template Method aplicado** — esqueleto comum na classe abstrata, cada subclasse define só o `toDto(T)` |
 | Beans gerenciados pelo Spring (`@Component`, `@Service`) | **Singleton** (gerenciado pelo container — não implementar manualmente) |
 | Integração com Spring Kafka / AWS SDK (LocalStack) | Ponto natural para uma **Facade**, se a integração crescer em complexidade |
 
