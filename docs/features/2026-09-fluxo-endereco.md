@@ -84,4 +84,5 @@ Referência: `.claude/skills/design-patterns/SKILL.md`.
 - Processo de geração deste arquivo: `docs/workflow-features-com-claude.md`
 - Template usado como base: `docs/features/EXEMPLO-feature-template.md`
 - Issue/ticket relacionado: (nenhum — feature de teste do fluxo)
-- PR: (preencher ao abrir)
+- PR: https://github.com/Alerson/kafka/pull/1 (implementação inicial)
+- PR: https://github.com/Alerson/kafka/pull/2 (fix pós-code-review: validação de `numero` + Template Method)
