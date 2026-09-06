@@ -22,8 +22,7 @@ public class ConsumerPessoa extends AbstractKafkaConsumer<Pessoa, PessoaDTO> {
     }
 
     @KafkaHandler
-    public void consumer(@Payload Pessoa pessoa,
-                         Acknowledgment ack) {
+    public void consumer(@Payload Pessoa pessoa, Acknowledgment ack) {
         processMessage(pessoa, ack);
     }
 

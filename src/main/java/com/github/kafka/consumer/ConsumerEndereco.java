@@ -22,8 +22,7 @@ public class ConsumerEndereco extends AbstractKafkaConsumer<Endereco, EnderecoDT
     }
 
     @KafkaHandler
-    public void consumer(@Payload Endereco endereco,
-                         Acknowledgment ack) {
+    public void consumer(@Payload Endereco endereco, Acknowledgment ack) {
         processMessage(endereco, ack);
     }
 
